@@ -97,7 +97,7 @@ POSTGRESQL_DATABASE=todos \
 	```
 4. check config.json in secret yaml : `kubectl get secret/regcred --output="jsonpath={.data.\.dockerconfigjson}"|base64 --decode`
 ### 6. create & apply wildfly-deployment 
-1. create deploy 、service yaml from folder:wildfly-app same as secret's namespace.
+1. create deploy 、service yaml from folder:deploy-wildfly-app ,then deploy-wildfly-app-kube-prometheus. same as secret's namespace.
 ### 7.deploy prometheus and grafana into kubernetes
 1. kube-prometheus ( use tool : prometheus-operator ) or prometheus.yaml with configuration yaml ( by configMap )
 2. kube-prometheus as example, git clone kube-prometheus project & go into kube-prometheus folder: [[prometheus- monitor activemq#Tool 2 : kube-prometheus [github](https://github.com/prometheus-operator/kube-prometheus kube-prometheus)]]
