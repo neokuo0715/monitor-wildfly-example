@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: frontend
+  namespace: wildfly-ex-app
+  labels:
+    tier: frontend
+spec:
+  selector:
+    matchLabels:
+      tier: frontend
+  targetLabels:
+    - tier
+  endpoints:
+  - path: /metrics
+    port: wildfly-ex-m
+    interval: 10s
+  namespaceSelector:
+    matchNames:
+      - wildfly-ex-app

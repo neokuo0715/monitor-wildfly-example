@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: frontend
+  namespace: wildfly-ex-app
+  labels:
+    prometheus: frontend
+spec:
+  serviceAccountName: prometheus-k8s # ServiceAccountName is the name of the ServiceAccount to use to run the Prometheus Pods. prometheus on monitoring namespace
+  version: v1.7.1
+  serviceMonitorSelector:
+    matchLabels:
+      tier: frontend # must be matched with serviceMonitor's label 
+  resources:
+    requests:
+      memory: 400Mi
+  alerting:
+    alertmanagers:
+    - namespace: monitoring
+      name: alertmanager-main
+      port: wildfly-ex-m

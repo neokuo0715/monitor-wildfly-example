@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wildfly-app-deployment
+  namespace: wildfly-ex-app
+  # labels:
+  #   application: wildfly-ex-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: example-app
+      application: wildfly-ex-app
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: example-app
+        application: wildfly-ex-app
+    spec:
+      containers:
+      - name: wildfly-ex-app
+        image: what2468ba/wildfly-todo-backend:v1.1
+        env: 
+        - name: POSTGRESQL_SERVICE_HOST
+          value: "postgresql-database-service.database.svc.cluster.local"
+        - name: POSTGRESQL_SERVICE_PORT
+          value: "5432"
+        - name: POSTGRESQL_USER
+          value: "todos"
+        - name: POSTGRESQL_PASSWORD
+          value: "mysecretpassword"
+        - name: POSTGRESQL_DATASOURCE
+          value: "ToDos"
+        ports:
+        - name: web
+          containerPort: 8080
+          protocol: TCP
+        - name: metrics
+          containerPort: 9990
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: wildfly-app-service
+  namespace: wildfly-ex-app
+  labels:
+    tier: frontend
+spec:
+  selector:
+    app.kubernetes.io/name: example-app
+  ports:
+    - name: wildfly-ex-app
+      protocol: TCP
+      port: 8080
+      targetPort: web
+    - name: wildfly-ex-m
+      protocol: TCP
+      port: 9990
+      targetPort: metrics
