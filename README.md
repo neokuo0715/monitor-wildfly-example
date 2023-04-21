@@ -1,4 +1,5 @@
 # monitor-wildfly-example
+- monitor wildfly-base-example-app by grafana on cloud-shell
 ## steps
 ### 1. build wildfly-embedded application
 1. git clone example project`todo-backend` [todo-backend](https://github.com/wildfly/quickstart/tree/main/todo-backend#run-the-backend-locally-as-a-bootable-jar)
